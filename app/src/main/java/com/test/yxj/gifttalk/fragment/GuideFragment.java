@@ -13,12 +13,16 @@ import android.view.ViewGroup;
 import com.test.yxj.gifttalk.R;
 import com.test.yxj.gifttalk.adapter.GuideTabAdapter;
 import com.test.yxj.gifttalk.bean.GuideTabBean;
+import com.test.yxj.gifttalk.dagger.DaggerAppComponent;
 import com.test.yxj.gifttalk.model.ApiService;
+import com.test.yxj.gifttalk.presenter.IGuidePresenter;
 import com.test.yxj.gifttalk.presenter.impl.GuidePresenter;
 import com.test.yxj.gifttalk.ui.IGuideView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,13 +39,15 @@ public class GuideFragment extends Fragment implements IGuideView{
     TabLayout guideTabLayout;
     @BindView(R.id.guide_view_pager)
     ViewPager guideViewPager;
-
+//    @Inject
+//    IGuidePresenter guidePresenter;
+    @Inject
+    ApiService apiService;
 
     public static final int OFFSET = 0;
     private List<GuideTabBean.DataBean.ChannelsBean> tabList = new ArrayList<>();
     private List<Fragment> fragmentList = new ArrayList<>();
     private GuideTabAdapter guideTabAdapter;
-    private ApiService apiService;
 
     public static GuideFragment newInstance(){
         return new GuideFragment();
@@ -57,13 +63,8 @@ public class GuideFragment extends Fragment implements IGuideView{
     }
 
     private void initApiService() {
-        apiService = new Retrofit.Builder()
-                .baseUrl("http://api.liwushuo.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build()
-                .create(ApiService.class);
-        GuidePresenter guidePresenter = new GuidePresenter(apiService);
+        DaggerAppComponent.create().inject(this);
+        IGuidePresenter guidePresenter = new GuidePresenter(apiService);
         guidePresenter.setView(this);
         guidePresenter.queryTabDatas();
     }

@@ -24,6 +24,7 @@ public class GuidePresenter implements IGuidePresenter {
         this.apiService = apiService;
     }
 
+    @Override
     public void setView(IGuideView guideView){
         this.guideView = guideView;
     }
