@@ -8,10 +8,11 @@
     <FrameLayout
         android:id="@+id/main_fragment_content_fl"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/main_select_rg"/>
 
     <RadioGroup
-        android:id="@+id/main_select_rg"
+        android:id="@id/main_select_rg"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"
