@@ -39,10 +39,10 @@ public class GuideFragment extends Fragment implements IGuideView{
     TabLayout guideTabLayout;
     @BindView(R.id.guide_view_pager)
     ViewPager guideViewPager;
-//    @Inject
-//    IGuidePresenter guidePresenter;
     @Inject
-    ApiService apiService;
+    IGuidePresenter guidePresenter;
+//    @Inject
+//    ApiService apiService;
 
     public static final int OFFSET = 0;
     private List<GuideTabBean.DataBean.ChannelsBean> tabList = new ArrayList<>();
@@ -64,7 +64,7 @@ public class GuideFragment extends Fragment implements IGuideView{
 
     private void initApiService() {
         DaggerAppComponent.create().inject(this);
-        IGuidePresenter guidePresenter = new GuidePresenter(apiService);
+//        IGuidePresenter guidePresenter = new GuidePresenter(apiService);
         guidePresenter.setView(this);
         guidePresenter.queryTabDatas();
     }
